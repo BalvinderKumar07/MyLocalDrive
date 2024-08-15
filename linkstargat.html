@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .container{
+            width: 100%;
+            height: auto;
+            padding: 30px 2%;
+            background: #fff;
+        }
+        .links{
+            width: 100%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .links ul li{
+            display: inline;
+            padding: 10px;
+        }
+        .links ul li a{
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: cadetblue;
+            font-size: 20px;
+            color: #000;
+        }
+        .links ul li a:hover{
+            background: #5ba1d7;
+        }
+        .main-content{
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        .cont-box1{
+            width: 100%;
+            height: 70vh;
+            background: red;
+        }
+        .cont-box1:nth-child(1){
+            background: #e4a660;
+        }
+        .cont-box1:nth-child(2){
+            background: gray;
+        }
+        .cont-box1:nth-child(3){
+            background: #9de555;
+        }
+        .cont-box1:nth-child(4){
+            background: #d578e6;
+        }
+        #cont-box1,#cont-box2,#cont-box3,#cont-box4{
+            display: none;
+            text-align: center;
+        }
+        #cont-box1:target{
+            display: block;
+        }
+        #cont-box2:target{
+            display: block;
+        }
+        #cont-box3:target{
+            display: block;
+        }
+        #cont-box4:target{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="links">
+            <ul>
+                <li><a href="#cont-box1">All</a></li>
+                <li><a href="#cont-box2">App</a></li>
+                <li><a href="#cont-box3">Card</a></li>
+                <li><a href="#cont-box4">Web</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="cont-box1" id="cont-box1">
+                <h1>BOX 1</h1>
+            </div>
+            <div class="cont-box1" id="cont-box2">
+                <h1>BOX 2</h1>
+            </div>
+            <div class="cont-box1" id="cont-box3">
+                <h1>BOX 3</h1>
+            </div>
+            <div class="cont-box1" id="cont-box4">
+                <h1>BOX 4</h1>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

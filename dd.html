@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Type Converter and PDF Generator</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        #canvas {
+            display: none;
+        }
+        .container {
+            text-align: center;
+        }
+        input[type="file"] {
+            margin-bottom: 20px;
+        }
+        select, button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Type Converter and PDF Generator</h1>
+        <input type="file" id="upload" accept="image/*" multiple>
+        <br>
+        <select id="format">
+            <option value="image/jpeg">JPEG</option>
+            <option value="image/png">PNG</option>
+            <option value="image/webp">WEBP</option>
+            <option value="pdf">PDF</option>
+        </select>
+        <br>
+        <button id="convert-btn">Convert and Download</button>
+    </div>
+    <canvas id="canvas"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+        document.getElementById('convert-btn').addEventListener('click', async function() {
+            const files = document.getElementById('upload').files;
+            if (files.length === 0) {
+                alert('Please upload one or more images first.');
+                return;
+            }
+
+            const format = document.getElementById('format').value;
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+
+            if (format === 'pdf') {
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF();
+
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const reader = new FileReader();
+
+                    reader.onload = function(event) {
+                        const img = new Image();
+                        img.onload = function() {
+                            const imgWidth = img.naturalWidth;
+                            const imgHeight = img.naturalHeight;
+
+                            // Set canvas dimensions to match image
+                            canvas.width = imgWidth;
+                            canvas.height = imgHeight;
+                            ctx.drawImage(img, 0, 0);
+
+                            const imgData = canvas.toDataURL('image/png');
+                            const pdf = new jsPDF({
+                                unit: 'px',
+                                format: [imgWidth, imgHeight]
+                            });
+
+                            if (i > 0) {
+                                pdf.addPage();
+                            }
+                            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+
+                            if (i === files.length - 1) {
+                                pdf.save('converted-images.pdf');
+                            }
+                        }
+                        img.src = event.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            } else {
+                for (const file of files) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const img = new Image();
+                        img.onload = function() {
+                            canvas.width = img.naturalWidth;
+                            canvas.height = img.naturalHeight;
+                            ctx.drawImage(img, 0, 0);
+
+                            if (format === "image/bmp" || format === "image/gif" || format === "image/tiff") {
+                                alert(`${format.split('/')[1].toUpperCase()} format is not supported by the canvas element.`);
+                                return;
+                            }
+
+                            const link = document.createElement('a');
+                            link.href = canvas.toDataURL(format);
+                            link.download = `${file.name.split('.').slice(0, -1).join('.')}.${format.split('/')[1]}`;
+                            link.click();
+                        }
+                        img.src = event.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

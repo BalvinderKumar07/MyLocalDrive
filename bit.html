@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Calculator</title>
+    <style>
+        .main-contauner{
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .calculator input {
+            margin: 10px auto;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #000;
+            outline: none;
+            border-radius: 5px;
+        }
+
+        .calculator button {
+            margin: 10px auto;
+            padding: 10px;
+            font-size: 16px;
+            background: #ff580c;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #binaryTable {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td,
+        th {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        td.on {
+            background-color: #ff580c;
+            color: white;
+        }
+
+        td.result-bit {
+            background-color: #0000ff; /* Blue background for result bits that are 1 */
+            color: white;
+        }
+
+        #solution {
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: left;
+            padding-left:7%;
+            white-space: pre-wrap; 
+        }
+
+        .restable {
+            width: 100%;
+            height: auto;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-contauner">
+    <div class="container">
+        <h1>Binary Calculator</h1>
+        <div class="calculator">
+            <input type="number" id="number1" placeholder="Enter first number">
+            <input type="number" id="number2" placeholder="Enter second number"><br>
+            <button onclick="calculate('AND')">AND</button>
+            <button onclick="calculate('OR')">OR</button>
+            <button onclick="calculate('XOR')">XOR</button>
+            <button onclick="calculate('NOT')">NOT (only first input)</button>
+            <div id="result"></div>
+            <div id="binaryTable"></div>
+            <div id="solution"></div>
+        </div>
+    </div>
+    <script>
+        function calculate(operation) {
+            const number1 = parseInt(document.getElementById('number1').value);
+            const number2 = parseInt(document.getElementById('number2').value);
+            let result;
+
+            if (isNaN(number1) || (operation !== 'NOT' && isNaN(number2))) {
+                alert('Please enter valid numbers');
+                return;
+            }
+
+            const binary1 = number1.toString(2);
+            const binary2 = number2.toString(2);
+
+            switch (operation) {
+                case 'AND':
+                    result = number1 & number2;
+                    break;
+                case 'OR':
+                    result = number1 | number2;
+                    break;
+                case 'XOR':
+                    result = number1 ^ number2;
+                    break;
+                case 'NOT':
+                    result = ~number1 & 0xFF;
+                    break;
+                default:
+                    alert('Invalid operation');
+                    return;
+            }
+            const binaryResult = result.toString(2);
+
+            displayResult(binary1, binary2, binaryResult, result, operation);
+        }
+
+        function displayResult(binary1, binary2, binaryResult, result, operation) {
+            const binaryTable = document.getElementById('binaryTable');
+            const resultDiv = document.getElementById('result');
+            const solutionDiv = document.getElementById('solution');
+
+            const maxLength = Math.max(binary1.length, binary2.length, binaryResult.length);
+            const paddedBinary1 = binary1.padStart(maxLength, '0');
+            const paddedBinary2 = binary2.padStart(maxLength, '0');
+            const paddedBinaryResult = binaryResult.padStart(maxLength, '0');
+
+            let tableHTML = `
+                <table class='restable' >
+                    <tr>
+                        <th>Position</th>
+                        ${[...Array(maxLength)].map((_, i) => {
+                                    // Generate the sequence 1, 2, 4, 8, 16, ...
+                                    let position = 1;
+                                    for (let j = 0; j < i; j++) {
+                                        position *= 2;
+                                    }
+                                    return `<th>${position}</th>`;
+                                }).reverse().join('')}
+                    </tr>
+                    <tr>
+                        <td>Number 1</td>
+                        ${paddedBinary1.split('').map(bit => `<td class="${bit === '1' ? 'on' : ''}">${bit}</td>`).join('')}
+                    </tr>
+                    ${binary2 ? `
+                    <tr>
+                        <td>Number 2</td>
+                        ${paddedBinary2.split('').map(bit => `<td class="${bit === '1' ? 'on' : ''}">${bit}</td>`).join('')}
+                    </tr>
+                    ` : ''}
+                    <tr>
+                        <td>Result</td>
+                        ${paddedBinaryResult.split('').map(bit => `<td class="${bit === '1' ? 'result-bit' : ''}">${bit}</td>`).join('')}
+                    </tr>
+                </table>
+            `;
+
+            resultDiv.innerText = `Result: ${result} (Binary: ${binaryResult})`;
+            binaryTable.innerHTML = tableHTML;
+
+            let solutionText = `Binary operation: ${operation}\n`;
+            solutionText += `Number 1: ${binary1} (decimal: ${parseInt(binary1, 2)})\n`;
+            if (binary2) {
+                solutionText += `Number 2: ${binary2} (decimal: ${parseInt(binary2, 2)})\n`;
+            }
+            solutionText += `Result: ${binaryResult} (decimal: ${result})\n`;
+            solutionText += `Explanation:\n`;
+
+            if (operation === 'AND') {
+                solutionText += `${paddedBinary1}\nAND\n${paddedBinary2}\n=\n${paddedBinaryResult}\n`;
+            } else if (operation === 'OR') {
+                solutionText += `${paddedBinary1}\nOR\n${paddedBinary2}\n=\n${paddedBinaryResult}\n`;
+            } else if (operation === 'XOR') {
+                solutionText += `${paddedBinary1}\nXOR\n${paddedBinary2}\n=\n${paddedBinaryResult}\n`;
+            } else if (operation === 'NOT') {
+                solutionText += `NOT\n${paddedBinary1}\n=\n${paddedBinaryResult}\n`;
+            }
+
+            solutionDiv.innerText = solutionText;
+        }
+    </script>
+    </div>
+</body>
+
+</html>

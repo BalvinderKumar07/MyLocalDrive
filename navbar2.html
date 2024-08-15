@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Open Sans", sans-serif;
+            list-style-type: none;
+        }
+        .main{
+            width: 100%;
+            height: 100vh;
+            background-image: url(https://img.freepik.com/free-vector/gradient-dynamic-blue-lines-background_23-2148995756.jpg?w=826&t=st=1721147274~exp=1721147874~hmac=91c654bc268f1e25452096e47ee9264d195914e11043fb8dc92fd99d17809695);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding: 50px;
+            
+        }
+        .navbar1{
+            background: #fff;
+            width: 100%;
+            height: auto;
+            padding: 20px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+        }
+        .navbar1 ul li{
+            padding: 10px 20px;
+            font-size: 25px;
+            display: inline;
+            cursor: pointer;
+        }
+        .navbar1 ul li span{
+            padding: 0 10px;
+        }
+        .navbar-hover ul li:hover{
+            color: #3a4efe;
+            cursor: pointer;
+        }
+        .container{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 30px 50px;
+        }
+        .navbar2 span i{
+            font-size: 50px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 50%;
+        }
+        .navbar3{
+            width: auto;
+            height: auto;
+            background: #fff;
+            padding: 30px 50px;
+            border-radius: 20px;
+        }
+        .navbar3 ul li{
+            padding: 10px 20px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        .navbar3 ul li span{
+            padding: 0 10px;
+        }
+        .navbar4 ul li{
+            font-size: 25px;
+        }
+        .navbar5{
+            background: #ffffff3b;
+            backdrop-filter: blur(5px);
+        }
+        .navbar5 ul li:hover{
+            background: #fff;
+            border-radius: 10px;
+        }
+        .navbar-style{
+            padding: 20px;
+        }
+        .navbar-style ul li:hover{
+            width: 100%;
+            background: #3a4efe;
+            color: #fff;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="navbar1     ">
+            <ul>
+                <li><span><i class='bx bx-home'></i></span>Home</li>
+                <li><span><i class='bx bx-food-menu'></i></span>Dashbord</li>
+                <li><span><i class='bx bx-group'></i></span>Segments</li>
+                <li><span><i class='bx bx-user'></i></span>Account</li>
+                <li><span><i class='bx bx-cog'></i></span>Setting</li>
+            </ul>
+        </div>
+        <div class="container">
+            <div class="navbar2 navbar-hover">
+               <ul>
+                <li> <span><i class='bx bx-menu' ></i></span></li>
+               </ul>
+            </div>
+            <div class="navbar3 navbar-hover navbar-style">
+                <ul>
+                    <li><span><i class='bx bx-home'></i></span></li>
+                    <li><span><i class='bx bx-food-menu'></i></span></li>
+                    <li><span><i class='bx bx-group'></i></span></li>
+                    <li><span><i class='bx bx-user'></i></span></li>
+                    <li><span><i class='bx bx-cog'></i></span></li>
+                </ul>
+            </div>
+            <div class="navbar3 navbar4 navbar-hover">
+                <ul>
+                    <li><span><i class='bx bx-home'></i></span>Home</li>
+                    <li><span><i class='bx bx-food-menu'></i></span>Dashbord</li>
+                    <li><span><i class='bx bx-group'></i></span>Segments</li>
+                    <li><span><i class='bx bx-user'></i></span>Account</li>
+                    <li><span><i class='bx bx-cog'></i></span>Setting</li>
+                </ul>
+            </div>
+            <div class="navbar3 navbar4 navbar-hover">
+                <ul>
+                    <li>Option <span>1</span></li>
+                    <li>Option <span>2</span></li>
+                    <li>Option <span>3</span></li>
+                    <li>Option <span>4</span></li>
+                    <li>Option <span>5</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="navbar1 navbar-hover navbar5">
+            <ul>
+                <li><span><i class='bx bx-home'></i></span>Home</li>
+                <li><span><i class='bx bx-food-menu'></i></span>Dashbord</li>
+                <li><span><i class='bx bx-group'></i></span>Segments</li>
+                <li><span><i class='bx bx-user'></i></span>Account</li>
+                <li><span><i class='bx bx-cog'></i></span>Setting</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
